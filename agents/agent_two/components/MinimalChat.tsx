@@ -170,12 +170,12 @@ export default function MinimalChat() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-full bg-transparent">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-muted-foreground py-8">
-            <p>Start a conversation with the AI assistant</p>
+            <p className="text-primary/70">Start a conversation with the AI assistant</p>
           </div>
         )}
 
@@ -183,7 +183,9 @@ export default function MinimalChat() {
           <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
             <div
               className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                message.role === "user" 
+                  ? "bg-primary text-primary-foreground shadow-lg" 
+                  : "bg-muted/50 text-foreground border border-border/50"
               }`}
             >
               <div className="whitespace-pre-wrap">{message.content}</div>
@@ -193,9 +195,9 @@ export default function MinimalChat() {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-muted text-foreground rounded-lg px-4 py-2">
+            <div className="bg-muted/50 text-foreground rounded-lg px-4 py-2 border border-border/50">
               <div className="flex items-center space-x-2">
-                <div className="animate-pulse">Thinking...</div>
+                <div className="animate-pulse text-primary">Thinking...</div>
               </div>
             </div>
           </div>
@@ -203,20 +205,20 @@ export default function MinimalChat() {
       </div>
 
       {/* Input */}
-      <div className="border-t border-border p-4">
+      <div className="border-t border-border/50 p-4 bg-card/20 rounded-b-xl">
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 px-3 py-2 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="flex-1 px-3 py-2 border border-border/50 rounded-lg bg-background/50 backdrop-blur-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 transition-all hover:shadow-lg"
           >
             <Send size={16} />
           </button>
