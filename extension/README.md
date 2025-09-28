@@ -1,0 +1,1 @@
+An extension with vite + react
